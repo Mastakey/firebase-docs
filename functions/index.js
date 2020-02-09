@@ -12,6 +12,14 @@ const {
 } = require("./handlers/users");
 
 const {
+  createTag,
+  getTags,
+  getTagById,
+  editTag,
+  deleteTag
+} = require("./handlers/tag/tag_controller");
+
+const {
   createMdoc,
   getMdocs,
   getMdocById,
@@ -26,6 +34,13 @@ app.post("/login", login);
 app.get("/user", FBAuth, getAuthenticatedUser);
 app.get("/user/:username", getUserDetails);
 
+//Tag routes
+app.post("/tag", FBAuth, createTag);
+app.get("/tag", FBAuth, getTags);
+app.get("/tag/:tagId", FBAuth, getTagById);
+app.put("/tag/:tagId", FBAuth, editTag);
+app.delete("/tag/:tagId", FBAuth, deleteTag);
+  
 //Mdoc routes
 app.post("/mdoc", FBAuth, createMdoc);
 app.get("/mdoc", FBAuth, getMdocs);

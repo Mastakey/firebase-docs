@@ -127,3 +127,7 @@ exports.deleteMdocService = async (db, params, user) => {
     throw err;
   }
 };
+
+exports.getMdocsByTagService = async (db, params, user) => {
+  
+}
