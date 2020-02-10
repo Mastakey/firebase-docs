@@ -116,6 +116,14 @@ exports.editMdocService = async (db, params, user) => {
   try {
     let date = new Date();
     const contentUpdated = params.contentUpdated;
+    //accept either tag array or tag csv
+    let editTags = params.tags;
+    if (params.tags && params.tags.length > 0) {
+      editTags = params.tags;
+    }
+    else {
+      editTags = getTagsFromStr(params.tags);
+    }
     const editMdoc = {
       name: params.name,
       description: params.description,
@@ -125,7 +133,7 @@ exports.editMdocService = async (db, params, user) => {
       status: params.status,
       pagenum: params.pagenum,
       folder: params.folder,
-      tags: getTagsFromStr(params.tags),
+      tags: editTags,
       updatedAt: date.toUTCString(),
       updatedAtTimestamp: date.getTime()
     };

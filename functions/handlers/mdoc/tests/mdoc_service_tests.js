@@ -144,8 +144,8 @@ let run = async () => {
   // await getMdocsTest();
   console.log("Get Mdoc by Id");
   await getMdocByIdTest(mdocId);
-  // console.log("Edit Mdoc");
-  // await editMdocTest(mdocId);
+  console.log("Edit Mdoc");
+  await editMdocTest(mdocId);
   // console.log("Delete Mdoc");
   // await deleteMdocTest(mdocId);
   // console.log("Get Mocs Limit");
