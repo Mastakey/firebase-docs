@@ -29,7 +29,7 @@ let createMdocTest = async () => {
     status: "status value",
     pagenum: "pagenum value",
     folder: "folder value",
-    tags: "tags value"
+    tags: "tagsvalue"
   };
   const user = {
     username: "user5"
@@ -82,7 +82,7 @@ let editMdocTest = async mdocId => {
     status: "status value",
     pagenum: "pagenum value",
     folder: "folder value",
-    tags: "tags value"
+    tags: "tagsvalue"
   };
   try {
     const user = {

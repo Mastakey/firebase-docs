@@ -9,8 +9,8 @@ exports.createTagService = async (db, params, user) => {
       username: user.username,
       status: params.status,
       docs: params.docs,
-      createdAt: date.toUTCString(),
-      createdAtTimestamp: date.getTime()
+      lastAdded: date.toUTCString(),
+      lastAddedTimestamp: date.getTime()
     };
     //validation
     let validationErrors = [];

@@ -118,10 +118,9 @@ exports.editMdocService = async (db, params, user) => {
     const contentUpdated = params.contentUpdated;
     //accept either tag array or tag csv
     let editTags = params.tags;
-    if (params.tags && params.tags.length > 0) {
+    if (params.tags && Array.isArray(params.tags) && params.tags.length > 0) {
       editTags = params.tags;
-    }
-    else {
+    } else {
       editTags = getTagsFromStr(params.tags);
     }
     const editMdoc = {

@@ -42,7 +42,7 @@ let createMdoc = async function() {
     status: "status value",
     pagenum: "pagenum value",
     folder: "folder value",
-    tags: "tags value",
+    tags: "tagsvalue",
     content: "content",
     delta: "delta",
         username: "user5"
@@ -100,7 +100,7 @@ let editMdoc = async function(headers, id) {
     status: "status value",
     pagenum: "pagenum value",
     folder: "folder value",
-    tags: "tags value",
+    tags: "tagsvalue",
         username: "user5",
         content: "new content",
         delta: "new delta"
