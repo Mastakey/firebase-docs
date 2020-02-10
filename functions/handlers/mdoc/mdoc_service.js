@@ -204,7 +204,7 @@ exports.getMdocsByTagService = async (db, params, user) => {
   try {
     let allMdocs = await db
       .collection("mdoc")
-      .where("tags", "array-contains", "sbm")
+      .where("tags", "array-contains", params.tag)
       .orderBy("createdAtTimestamp", "desc")
       .get();
     let mdocs = [];
