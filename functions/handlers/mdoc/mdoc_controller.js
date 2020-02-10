@@ -67,3 +67,13 @@ exports.deleteMdoc = async (req, res) => {
     return res.status(500).json(err);
   }
 };
+
+exports.getMdocsLimit = async (req, res) => {
+  try {
+    let resp = await getMocsLimitService(db, req.body, req.user);
+    return res.status(resp.status).json(resp.response);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json(err);
+  }
+};
