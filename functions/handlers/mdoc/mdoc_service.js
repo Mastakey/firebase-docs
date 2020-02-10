@@ -1,4 +1,5 @@
 const { validateName } = require("./mdoc_validators");
+const { getTagsFromStr, getTagStrFromArray } = require("./mdoc_util");
 
 exports.createMdocService = async (db, params, user) => {
   try {
@@ -12,7 +13,7 @@ exports.createMdocService = async (db, params, user) => {
       status: params.status,
       pagenum: params.pagenum,
       folder: params.folder,
-      tags: params.tags,
+      tags: getTagsFromStr(params.tags),
       createdAt: date.toUTCString(),
       createdAtTimestamp: date.getTime()
     };
@@ -79,6 +80,7 @@ exports.getMdocByIdService = async (db, params, user) => {
       return { status: 404, response: { error: "mdoc not found" } };
     }
     docData = mdoc.data();
+    //docData.tags = getTagStrFromArray(mdoc.data().tags);
     let snapshot = await db
       .collection("content")
       .where("docId", "==", params.mdocId)
@@ -110,7 +112,7 @@ exports.editMdocService = async (db, params, user) => {
       status: params.status,
       pagenum: params.pagenum,
       folder: params.folder,
-      tags: params.tags,
+      tags: getTagsFromStr(params.tags),
       updatedAt: date.toUTCString(),
       updatedAtTimestamp: date.getTime()
     };
@@ -166,18 +168,12 @@ exports.deleteMdocService = async (db, params, user) => {
   }
 };
 
-exports.getMdocsByTagService = async (db, params, user) => {};
-
-exports.getMocsLimitService = async (db, params, user) => {
+exports.getMdocsByTagService = async (db, params, user) => {
   try {
-    let limit = 20;
-    if (params && params.limit && params.limit > 0) {
-      limit = params.limit;
-    }
     let allMdocs = await db
       .collection("mdoc")
+      .where("tags", "array-contains", "sbm")
       .orderBy("createdAtTimestamp", "desc")
-      .limit(limit)
       .get();
     let mdocs = [];
     allMdocs.forEach(doc => {
@@ -188,7 +184,32 @@ exports.getMocsLimitService = async (db, params, user) => {
     });
     return { status: 200, response: mdocs };
   } catch (err) {
-    err.function = "getMocsLimit";
+    err.function = "getMdocsByTagService";
+    throw err;
+  }
+};
+
+exports.getMocsLimitService = async (db, params, user) => {
+  try {
+    let limit = 20;
+    if (params && params.limit && params.limit > 0 && parseInt(params.limit)) {
+      limit = params.limit;
+    }
+    let allMdocs = await db
+      .collection("mdoc")
+      .orderBy("createdAtTimestamp", "desc")
+      .limit(parseInt(params.limit))
+      .get();
+    let mdocs = [];
+    allMdocs.forEach(doc => {
+      mdocs.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    return { status: 200, response: mdocs };
+  } catch (err) {
+    err.function = "getMocsLimitService";
     throw err;
   }
 };

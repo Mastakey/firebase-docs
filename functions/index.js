@@ -24,7 +24,9 @@ const {
   getMdocs,
   getMdocById,
   editMdoc,
-  deleteMdoc
+  deleteMdoc,
+  getMdocsLimit,
+  getMdocsByTag
 } = require("./handlers/mdoc/mdoc_controller");
 
 
@@ -44,6 +46,8 @@ app.delete("/tag/:tagId", FBAuth, deleteTag);
 //Mdoc routes
 app.post("/mdoc", FBAuth, createMdoc);
 app.get("/mdoc", FBAuth, getMdocs);
+app.get("/mdoc/tag/:tag", FBAuth, getMdocsByTag);
+app.get("/mdoc/limit/:limit", FBAuth, getMdocsLimit);
 app.get("/mdoc/:mdocId", FBAuth, getMdocById);
 app.put("/mdoc/:mdocId", FBAuth, editMdoc);
 app.delete("/mdoc/:mdocId", FBAuth, deleteMdoc);

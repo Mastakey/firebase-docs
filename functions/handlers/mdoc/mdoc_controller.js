@@ -4,7 +4,9 @@ const {
   getMdocsService,
   getMdocByIdService,
   editMdocService,
-  deleteMdocService
+  deleteMdocService,
+  getMocsLimitService,
+  getMdocsByTagService
 } = require("./mdoc_service");
 
 exports.createMdoc = async (req, res) => {
@@ -70,7 +72,25 @@ exports.deleteMdoc = async (req, res) => {
 
 exports.getMdocsLimit = async (req, res) => {
   try {
-    let resp = await getMocsLimitService(db, req.body, req.user);
+    const params = {
+      ...req.body,
+      limit: req.params.limit
+    }
+    let resp = await getMocsLimitService(db, params, req.user);
+    return res.status(resp.status).json(resp.response);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json(err);
+  }
+};
+
+exports.getMdocsByTag = async (req, res) => {
+  try {
+    const params = {
+      ...req.body,
+      tag: req.params.tag
+    };
+    let resp = await getMdocsByTagService(db, params, req.user);
     return res.status(resp.status).json(resp.response);
   } catch (err) {
     console.error(err);

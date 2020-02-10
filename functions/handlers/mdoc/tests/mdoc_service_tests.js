@@ -14,7 +14,8 @@ const {
   getMdocByIdService,
   editMdocService,
   deleteMdocService,
-  getMocsLimitService
+  getMocsLimitService,
+  getMdocsByTagService
 } = require("../mdoc_service");
 
 let createMdocTest = async () => {
@@ -121,19 +122,36 @@ let getMdocsLimitTest = async () => {
   }
 };
 
+let getMdocsByTagTest = async () => {
+  try {
+    const params = {
+      tag: "sbm"
+    };
+    const user = {
+      username: "user5"
+    };
+    let resp = await getMdocsByTagService(db, params, user);
+    console.log(resp);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 let run = async () => {
-  console.log("Create Mdoc");
-  let mdocId = await createMdocTest();
+  // console.log("Create Mdoc");
+  // let mdocId = await createMdocTest();
   // console.log("Get Mdocs");
   // await getMdocsTest();
-  console.log("Get Mdoc by Id");
-  await getMdocByIdTest(mdocId);
+  // console.log("Get Mdoc by Id");
+  // await getMdocByIdTest(mdocId);
   // console.log("Edit Mdoc");
   // await editMdocTest(mdocId);
   // console.log("Delete Mdoc");
   // await deleteMdocTest(mdocId);
   // console.log("Get Mocs Limit");
   // await getMdocsLimitTest();
+  console.log("Get Mdocs by Tag");
+  await getMdocsByTagTest();
 };
 
 run();

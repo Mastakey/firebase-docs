@@ -43,6 +43,8 @@ let createMdoc = async function() {
     pagenum: "pagenum value",
     folder: "folder value",
     tags: "tags value",
+    content: "content",
+    delta: "delta",
         username: "user5"
       },
       { headers: headers }
@@ -99,7 +101,9 @@ let editMdoc = async function(headers, id) {
     pagenum: "pagenum value",
     folder: "folder value",
     tags: "tags value",
-        username: "user5"
+        username: "user5",
+        content: "new content",
+        delta: "new delta"
       },
       {
         headers: headers
@@ -130,6 +134,36 @@ let deleteMdoc = async function(headers, id) {
   }
 };
 
+let getMdocsLimit = async function(headers) {
+  try {
+    let mdocRes = await axios.get(apiUrl + "/mdoc/limit/1", {
+      headers: headers
+    });
+    console.log(mdocRes.status);
+    console.log(mdocRes.statusText);
+    console.log(mdocRes.data);
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
+let getMdocsByTag = async function(headers) {
+  try {
+    let mdocRes = await axios.get(apiUrl + "/mdoc/tag/sbm", {
+      headers: headers
+    });
+    console.log(mdocRes.status);
+    console.log(mdocRes.statusText);
+    console.log(mdocRes.data);
+  } catch (err) {
+    console.error(err.response.status);
+    console.error(err.response.statusText);
+    console.error(err.response.data);
+  }
+};
+
 let run = async function() {
   console.log("Login");
   let headers = await login();
@@ -143,6 +177,10 @@ let run = async function() {
   await editMdoc(headers, id);
   console.log("Delete Mdoc Run");
   await deleteMdoc(headers, id);
+  console.log("Get Limit");
+  await getMdocsLimit(headers);
+  console.log("Get by Tag");
+  await getMdocsByTag(headers);
 };
 
 run();
