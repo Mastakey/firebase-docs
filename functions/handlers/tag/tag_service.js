@@ -23,7 +23,7 @@ exports.createTagService = async (db, params, user) => {
     if (validationErrors.length > 0) {
       throw { error: validationErrors, function: "createTodoService" };
     }
-    let tag = await db.collection("tag").add(newTag);
+    let tag = await db.collection("tag").doc(params.name).set(newTag);
     let resp = newTag;
     resp.id = tag.id;
     return { status: 200, response: resp };

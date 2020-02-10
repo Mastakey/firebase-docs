@@ -1,5 +1,6 @@
 const { validateName } = require("./mdoc_validators");
 const { getTagsFromStr, getTagStrFromArray } = require("./mdoc_util");
+const { createTagService } = require("../tag/tag_service");
 
 exports.createMdocService = async (db, params, user) => {
   try {
@@ -42,6 +43,18 @@ exports.createMdocService = async (db, params, user) => {
     };
     await db.collection("content").add(newContent);
     resp.content = newContent.content;
+    //Tags
+    for (let i = 0; i < newMdoc.tags.length; i++) {
+      let tagParams = {
+        name: newMdoc.tags[i],
+        description: "",
+        status: "",
+        docs: [],
+        createdAt: date.toUTCString(),
+        createdAtTimestamp: date.getTime()
+      };
+      await createTagService(db, tagParams, user);
+    }
     return { status: 200, response: resp };
   } catch (err) {
     err.function = "createMdocService";
@@ -145,6 +158,18 @@ exports.editMdocService = async (db, params, user) => {
       await db.collection("content").add(newContent);
       editMdoc.content = params.content;
       editMdoc.delta = params.delta;
+    }
+    //Tags
+    for (let i = 0; i < editMdoc.tags.length; i++) {
+      let tagParams = {
+        name: editMdoc.tags[i],
+        description: "",
+        status: "",
+        docs: [],
+        createdAt: date.toUTCString(),
+        createdAtTimestamp: date.getTime()
+      };
+      await createTagService(db, tagParams, user);
     }
     return { status: 200, response: editMdoc };
   } catch (err) {

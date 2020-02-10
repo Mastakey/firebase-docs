@@ -138,12 +138,12 @@ let getMdocsByTagTest = async () => {
 };
 
 let run = async () => {
-  // console.log("Create Mdoc");
-  // let mdocId = await createMdocTest();
+  console.log("Create Mdoc");
+  let mdocId = await createMdocTest();
   // console.log("Get Mdocs");
   // await getMdocsTest();
-  // console.log("Get Mdoc by Id");
-  // await getMdocByIdTest(mdocId);
+  console.log("Get Mdoc by Id");
+  await getMdocByIdTest(mdocId);
   // console.log("Edit Mdoc");
   // await editMdocTest(mdocId);
   // console.log("Delete Mdoc");

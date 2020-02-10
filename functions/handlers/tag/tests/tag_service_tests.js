@@ -18,7 +18,7 @@ const {
 
 let createTagTest = async () => {
   const params = {
-    name: "test tag",
+    name: "testtag",
     description: "test tag desc",
     status: "status value",
     docs: "docs value"
@@ -29,7 +29,7 @@ let createTagTest = async () => {
   try {
     let resp = await createTagService(db, params, user);
     console.log(resp);
-    return resp.response.id;
+    return resp.response.name;
   } catch (err) {
     console.log(err);
   }
@@ -98,6 +98,7 @@ let run = async () => {
   console.log("Get Tags");
   await getTagsTest();
   console.log("Get Tag by Id");
+  console.log(tagId);
   await getTagByIdTest(tagId);
   console.log("Edit Tag");
   await editTagTest(tagId);
