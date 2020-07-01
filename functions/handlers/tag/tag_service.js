@@ -37,7 +37,7 @@ exports.getTagsService = async (db, params, user) => {
   try {
     let allTags = await db
       .collection("tag")
-      .orderBy("createdAtTimestamp", "desc")
+      .orderBy("lastAddedTimestamp", "desc")
       .get();
     let tags = [];
     allTags.forEach(doc => {

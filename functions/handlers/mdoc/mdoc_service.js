@@ -82,6 +82,28 @@ exports.getMdocsService = async (db, params, user) => {
   }
 };
 
+exports.getMdocsServiceByFolder = async (db, params, user) => {
+  try {
+    let folderId = params.folderId;
+    let allMdocs = await db
+      .collection("mdoc")
+      .where("folder", "==", folderId)
+      .orderBy("createdAtTimestamp", "desc")
+      .get();
+    let mdocs = [];
+    allMdocs.forEach(doc => {
+      mdocs.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+    return { status: 200, response: mdocs };
+  } catch (err) {
+    err.function = "getMdocsService";
+    throw err;
+  }
+};
+
 exports.getMdocByIdService = async (db, params, user) => {
   try {
     let docData = {};

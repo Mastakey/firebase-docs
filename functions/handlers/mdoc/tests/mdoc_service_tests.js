@@ -11,6 +11,7 @@ const db = admin.firestore();
 const {
   createMdocService,
   getMdocsService,
+  getMdocsServiceByFolder,
   getMdocByIdService,
   editMdocService,
   deleteMdocService,
@@ -45,12 +46,26 @@ let createMdocTest = async () => {
 
 let getMdocsTest = async () => {
   try {
-    const params = {
-    };
+    const params = {};
     const user = {
       username: "user5"
     };
     let resp = await getMdocsService(db, params, user);
+    console.log(resp);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+let getMdocsByParentTest = async () => {
+  try {
+    const params = {
+      folderId: "qKJEPug3Bto9pGOewMri"
+    };
+    const user = {
+      username: "user5"
+    };
+    let resp = await getMdocsServiceByFolder(db, params, user);
     console.log(resp);
   } catch (err) {
     console.log(err);
@@ -142,16 +157,20 @@ let run = async () => {
   // let mdocId = await createMdocTest();
   // console.log("Get Mdocs");
   // await getMdocsTest();
+  console.log("Get Mdocs by parent");
+  await getMdocsByParentTest();
   // console.log("Get Mdoc by Id");
   // await getMdocByIdTest(mdocId);
+  // console.log("Get Mdoc by Id");
+  // await getMdocByIdTest("sun0IsVsdYplNSYVF4SJ");
   // console.log("Edit Mdoc");
   // await editMdocTest(mdocId);
   // console.log("Delete Mdoc");
   // await deleteMdocTest(mdocId);
   // console.log("Get Mocs Limit");
   // await getMdocsLimitTest();
-  console.log("Get Mdocs by Tag");
-  await getMdocsByTagTest();
+  // console.log("Get Mdocs by Tag");
+  // await getMdocsByTagTest();
 };
 
 run();

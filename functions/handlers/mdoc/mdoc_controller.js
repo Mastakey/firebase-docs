@@ -2,6 +2,7 @@ const { db } = require("../../util/admin");
 const {
   createMdocService,
   getMdocsService,
+  getMdocsServiceByFolder,
   getMdocByIdService,
   editMdocService,
   deleteMdocService,
@@ -22,6 +23,20 @@ exports.createMdoc = async (req, res) => {
 exports.getMdocs = async (req, res) => {
   try {
     let resp = await getMdocsService(db, req.body, req.user);
+    return res.status(resp.status).json(resp.response);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json(err);
+  }
+};
+
+exports.getMdocsByFolder = async (req, res) => {
+  try {
+    const params = {
+      ...req.body,
+      folderId: req.params.folderId
+    };
+    let resp = await getMdocsServiceByFolder(db, params, req.user);
     return res.status(resp.status).json(resp.response);
   } catch (err) {
     console.error(err);
@@ -75,7 +90,7 @@ exports.getMdocsLimit = async (req, res) => {
     const params = {
       ...req.body,
       limit: req.params.limit
-    }
+    };
     let resp = await getMocsLimitService(db, params, req.user);
     return res.status(resp.status).json(resp.response);
   } catch (err) {
