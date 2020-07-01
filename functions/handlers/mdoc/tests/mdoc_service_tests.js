@@ -11,21 +11,26 @@ const db = admin.firestore();
 const {
   createMdocService,
   getMdocsService,
+  getMdocsServiceByFolder,
   getMdocByIdService,
   editMdocService,
-  deleteMdocService
+  deleteMdocService,
+  getMocsLimitService,
+  getMdocsByTagService
 } = require("../mdoc_service");
 
 let createMdocTest = async () => {
   const params = {
     name: "test mdoc",
     description: "test mdoc desc",
+    content: "test content",
+    delta: "",
     options: "options value",
     links: "links value",
     status: "status value",
     pagenum: "pagenum value",
     folder: "folder value",
-    tags: "tags value"
+    tags: "tagsvalue"
   };
   const user = {
     username: "user5"
@@ -41,12 +46,26 @@ let createMdocTest = async () => {
 
 let getMdocsTest = async () => {
   try {
-    const params = {
-    };
+    const params = {};
     const user = {
       username: "user5"
     };
     let resp = await getMdocsService(db, params, user);
+    console.log(resp);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+let getMdocsByParentTest = async () => {
+  try {
+    const params = {
+      folderId: "qKJEPug3Bto9pGOewMri"
+    };
+    const user = {
+      username: "user5"
+    };
+    let resp = await getMdocsServiceByFolder(db, params, user);
     console.log(resp);
   } catch (err) {
     console.log(err);
@@ -69,13 +88,16 @@ let editMdocTest = async mdocId => {
   const params = {
     name: "test mdoc edited",
     description: "test mdoc desc edited",
+    content: "new test content",
+    delta: "",
+    contentUpdated: true,
     mdocId: mdocId,
     options: "options value",
     links: "links value",
     status: "status value",
     pagenum: "pagenum value",
     folder: "folder value",
-    tags: "tags value"
+    tags: "tagsvalue"
   };
   try {
     const user = {
@@ -100,17 +122,55 @@ let deleteMdocTest = async mdocId => {
   }
 };
 
+let getMdocsLimitTest = async () => {
+  try {
+    const params = {
+      limit: 1
+    };
+    const user = {
+      username: "user5"
+    };
+    let resp = await getMocsLimitService(db, params, user);
+    console.log(resp);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+let getMdocsByTagTest = async () => {
+  try {
+    const params = {
+      tag: "automation"
+    };
+    const user = {
+      username: "user5"
+    };
+    let resp = await getMdocsByTagService(db, params, user);
+    console.log(resp);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 let run = async () => {
-  console.log("Create Mdoc");
-  let mdocId = await createMdocTest();
-  console.log("Get Mdocs");
-  await getMdocsTest();
-  console.log("Get Mdoc by Id");
-  await getMdocByIdTest(mdocId);
-  console.log("Edit Mdoc");
-  await editMdocTest(mdocId);
-  console.log("Delete Mdoc");
-  await deleteMdocTest(mdocId);
+  // console.log("Create Mdoc");
+  // let mdocId = await createMdocTest();
+  // console.log("Get Mdocs");
+  // await getMdocsTest();
+  console.log("Get Mdocs by parent");
+  await getMdocsByParentTest();
+  // console.log("Get Mdoc by Id");
+  // await getMdocByIdTest(mdocId);
+  // console.log("Get Mdoc by Id");
+  // await getMdocByIdTest("sun0IsVsdYplNSYVF4SJ");
+  // console.log("Edit Mdoc");
+  // await editMdocTest(mdocId);
+  // console.log("Delete Mdoc");
+  // await deleteMdocTest(mdocId);
+  // console.log("Get Mocs Limit");
+  // await getMdocsLimitTest();
+  // console.log("Get Mdocs by Tag");
+  // await getMdocsByTagTest();
 };
 
 run();
